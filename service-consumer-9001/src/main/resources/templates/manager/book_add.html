@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/minireset.css" th:href="@{/css/minireset.css}"/>
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="../../static/css/cart.css" th:href="@{/css/cart.css}"/>
+    <link rel="stylesheet" href="../../static/css/bookManger.css" th:href="@{/css/bookManger.css}"/>
+    <link rel="stylesheet" href="../../static/css/register.css" th:href="@{/css/register.css}"/>
+    <link rel="stylesheet" href="../../static/css/book_edit.css" th:href="@{/css/book_edit.css}"/>
+</head>
+<body>
+<div class="header">
+    <div class="w">
+        <div class="header-left">
+            <a href="#">
+                <img src="../../static/img/logo.gif" alt="" th:src="@{/img/logo.gif}"/></a>
+            <h1>添加图书</h1>
+        </div>
+        <div class="header-right">
+            <a href="#" th:href="@{/manager/bookManager}" class="order">图书管理</a>
+            <a href="order_manager.html" th:href="@{/manager/toOrderManager}" class="destory">订单管理</a>
+        </div>
+    </div>
+</div>
+<div class="login_banner">
+    <div class="register_form">
+        <form th:action="@{/manager/addBook}" method="post">
+            <label th:text="${addBook}" style="color: red"></label>
+            <div class="form-item">
+                <div>
+                    <label>名称:</label>
+                    <input type="text" placeholder="请输入名称" name="bookName" required="required"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>价格:</label>
+                    <input type="number" placeholder="请输入价格" name="price" required="required"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>作者:</label>
+                    <input type="text" placeholder="请输入作者" name="author" required="required"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>销量:</label>
+                    <input type="number" placeholder="请输入销量" name="saleCount" required="required"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>库存:</label>
+                    <input type="number" placeholder="请输入库存" name="bookCount" required="required"/>
+                </div>
+            </div>
+
+            <button class="btn">提交</button>
+        </form>
+    </div>
+</div>
+
+<div th:replace="common :: #common_bottom2"></div>
+
+</body>
+</html>

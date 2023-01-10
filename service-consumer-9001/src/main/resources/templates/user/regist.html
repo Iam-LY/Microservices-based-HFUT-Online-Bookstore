@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>尚硅谷会员注册页面</title>
+    <link th:href="@{/css/style.css}" href="../../static/css/style.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/register.css}" href="../../static/css/register.css" rel="stylesheet"/>
+    <style type="text/css">
+        .login_form {
+            height: 420px;
+            margin-top: 25px;
+        }
+    </style>
+
+    <script th:src="@{/script/regist.js}"></script>
+
+</head>
+<body>
+<div id="login_header">
+    <a href="#">
+        <img alt="" class="logo_img" src="../../static/img/logo.gif" th:src="@{/img/logo.gif}"/>
+    </a>
+</div>
+
+<div class="login_banner">
+    <div class="register_form">
+        <h1>注册尚硅谷会员</h1>
+        <form th:action="@{/register}" method="post">
+            <div class="form-item">
+                <div>
+                    <label>用户名称:</label>
+                    <input placeholder="请输入用户名" type="text" name="uname" required="required"/>
+                </div>
+                <span class="errMess">用户名应为6~16位数组和字母组成</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>用户密码:</label>
+                    <input placeholder="请输入密码" type="password" name="pwd" required="required"/>
+                </div>
+                <span class="errMess">密码的长度至少为8位</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>确认密码:</label>
+                    <input placeholder="请输入确认密码" type="password" name="pwd2" required="required"/>
+                </div>
+                <label th:if="${msg==2}" style="color: red">密码两次输入不一致</label>
+                <span class="errMess">密码两次输入不一致</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>用户邮箱:</label>
+                    <input placeholder="请输入邮箱" type="email" name="email" required="required"/>
+                </div>
+                <span class="errMess">请输入正确的邮箱格式</span>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>验证码:</label>
+                    <div class="verify">
+                        <input placeholder="请输入验证码" type="text" name="verifyCode"/>
+                        <img alt="" th:src="@{/defaultKaptcha}"/>
+                    </div>
+                </div>
+                <label th:if="${msg==1}" style="color: red">请输入正确的验证码</label>
+                <span class="errMess">请输入正确的验证码</span>
+            </div>
+            <button class="btn">注册</button>
+        </form>
+    </div>
+</div>
+<div id="bottom">
+      <span>
+        尚硅谷书城.Copyright &copy;2015
+      </span>
+</div>
+</body>
+</html>

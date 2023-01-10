@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/css/minireset.css" th:href="@{/css/minireset.css}"/>
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" href="../../static/css/cart.css" th:href="@{/css/cart.css}"/>
+</head>
+<body>
+<div class="header">
+    <div class="w">
+        <div class="header-left">
+            <a href="#">
+                <img src="../../static/img/logo.gif" alt="" th:src="@{/img/logo.gif}"/>
+            </a>
+            <h1>订单详情</h1>
+        </div>
+        <div class="header-right">
+            <div>
+                <a th:href="@{/manager/bookManager}" class="order">图书管理</a>
+            </div>
+            <div>
+                <a th:href="@{/manager/toOrderManager}" class="destory">订单管理</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="list">
+    <div class="w">
+        <table>
+            <thead>
+            <tr>
+                <th>图片</th>
+                <th>商品名称</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>金额</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderItem : ${order.orderItemList}">
+                <td>
+                    <img src="../../static/uploads/huozhe.jpg" th:src="@{|/uploads/*{orderItem.book.bookName}.jpg|}" alt=""/>
+                </td>
+                <td th:text="${orderItem.book.bookName}">活着</td>
+                <td th:text="${orderItem.buyCount}">1</td>
+                <td th:text="|￥${orderItem.book.price}|">36.8</td>
+                <td th:text="|￥${orderItem.orderItemMoney}|">36.8</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="footer">
+            <div class="footer-left">
+                <div>下单用户：<span style="color: black" th:text="${order.orderUser.uname}">用户</span></div>
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;订单编号：<span style="color: black" th:text="${order.getOrderNo()}"></span>
+                </div>
+            </div>
+            <div class="footer-right">
+                <div>共<span th:text="${order.totalBookCount}">3</span>件商品</div>
+                <div class="total-price">总金额<span th:text="${order.getOrderMoney()}">99.9</span>元</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="common :: #common_bottom"></div>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>fallback</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body class="error-page">
+<div>
+    <section class="error-wrapper text-center">
+        <h2 style="font-size: 80px; color: white">服务器忙...</h2>
+        <br>
+        <br>
+        <h3 style="font-size: 30px;">加载失败</h3>
+        <br>
+        <br>
+        <a style="text-decoration: none; font-size: 20px" th:href="@{/toLogin}">返回重新登录</a>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>我的订单</title>
+    <link rel="stylesheet" href="../../static/css/minireset.css" th:href="@{/css/minireset.css}"/>
+    <link rel="stylesheet" href="../../static/css/common.css" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" href="../../static/css/cart.css" th:href="@{/css/cart.css}"/>
+    <link rel="stylesheet" href="../../static/css/bookManger.css" th:href="@{/css/bookManger.css}"/>
+    <link rel="stylesheet" href="../../static/css/orderManger.css" th:href="@{/css/orderManger.css}"/>
+</head>
+<body>
+<div class="header">
+    <div class="w">
+        <div class="header-left">
+            <a th:href="@{/toIndex}">
+                <img th:src="@{/img/logo.gif}" alt=""/>
+            </a>
+            <h1>我的订单</h1>
+        </div>
+        <div class="header-right">
+            <h3>欢迎<span th:text="${session.currUser.getUname()}">张总</span>光临合工大在线书城</h3>
+            <div class="order"><a href="#">我的订单</a></div>
+            <div class="destory"><a th:href="@{/loginOut}">注销</a></div>
+            <div class="gohome">
+                <a th:href="@{/toCart}">返回</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="list">
+    <div class="w">
+        <table>
+            <thead>
+            <tr>
+                <th>订单编号</th>
+                <th>下单时间</th>
+                <th>订单金额</th>
+                <th>书本数量</th>
+                <th>订单状态</th>
+                <th>订单详情</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${session.currUser.orderBeanList}">
+                <td th:text="${order.getOrderNo()}">12354456895</td>
+                <td th:text="${#dates.format(order.getOrderDate(), 'yyyy-MM-dd HH:mm:ss')}">2015.04.23</td>
+                <td th:text="|￥${order.getOrderMoney()}|">90.00</td>
+                <td th:text="${order.getTotalBookCount()}">88</td>
+
+                <td th:if="${order.orderStatus==0}"><a href="" style="color: red">等待发货</a></td>
+                <td th:unless="${order.orderStatus==0}"><a href="" class="send">已发货</a></td>
+
+                <td><a th:href="@{/getOrder(id=${order.id})}">查看详情</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="footer">
+            <div class="footer-right">
+                <div>首页</div>
+                <div>上一页</div>
+                <ul>
+                    <li class="active">1</li>
+                    <li>2</li>
+                    <li>3</li>
+                </ul>
+                <div>下一页</div>
+                <div>末页</div>
+                <span>共10页</span>
+                <span>30条记录</span>
+                <span>到第</span>
+                <input type="text"/>
+                <span>页</span>
+                <button>确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="common :: #common_bottom"></div>
+
+</body>
+</html>
