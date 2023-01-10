@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hfut.glxy.springcloud.mapper.OrderMapper">
+
+    <insert id="addOrderBean" useGeneratedKeys="true" keyProperty="id">
+        insert into t_order
+        values (null, #{orderBean.orderNo}, #{orderBean.orderDate}, #{orderBean.orderUser.id}, #{orderBean.orderMoney},
+                #{orderBean.orderStatus});
+    </insert>
+
+    <select id="getOrderTotalBookCount" resultType="java.lang.Integer">
+        select sum(buyCount)
+        from t_order_item
+        where orderBean = #{orderBeanId}
+    </select>
+
+    <update id="deliver">
+        update t_order
+        set orderStatus = 1
+        where id = #{id}
+    </update>
+
+
+
+
+    <resultMap id="orderListMap" type="com.hfut.glxy.springcloud.entities.OrderBean">
+        <id property="id" column="id"/>
+        <result property="orderNo" column="orderNo"/>
+        <result property="orderDate" column="orderDate"/>
+        <result property="orderMoney" column="orderMoney"/>
+        <result property="orderStatus" column="orderStatus"/>
+        <association property="orderUser" column="orderUser"
+                     select="com.hfut.glxy.springcloud.mapper.UserMapper.getUserById"
+                     javaType="com.hfut.glxy.springcloud.entities.User"/>
+        <association property="totalBookCount" column="id"
+                     select="com.hfut.glxy.springcloud.mapper.OrderMapper.getOrderTotalBookCount"
+                     javaType="int"/>
+        <collection property="orderItemList" ofType="com.hfut.glxy.springcloud.entities.OrderItem">
+            <!--id=null?-->
+            <id property="id" column="t_order_item.id"/>
+            <result property="buyCount" column="buyCount"/>
+            <association property="book" column="book"
+                         select="com.hfut.glxy.springcloud.mapper.BookMapper.getBook"
+                         javaType="com.hfut.glxy.springcloud.entities.Book"/>
+        </collection>
+
+    </resultMap>
+    <select id="getOrderList" resultMap="orderListMap">
+        select *
+        from t_order
+                 left join t_order_item on t_order.id = t_order_item.orderBean
+        where orderUser = #{user.id}
+        order by orderDate desc
+    </select>
+
+    <select id="getOrderById" resultMap="orderListMap">
+        select *
+        from t_order
+                 left join t_order_item on t_order.id = t_order_item.orderBean
+        where t_order.id = #{OrderId}
+    </select>
+
+    <select id="getAllOrder" resultMap="orderListMap">
+        select *
+        from t_order
+                 left join t_order_item on t_order.id = t_order_item.orderBean
+        order by orderDate desc
+    </select>
+
+</mapper>

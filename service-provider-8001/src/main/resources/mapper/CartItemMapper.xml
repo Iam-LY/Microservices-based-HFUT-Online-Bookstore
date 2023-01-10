@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hfut.glxy.springcloud.mapper.CartItemMapper">
+
+    <insert id="addCartItem">
+        insert into t_cart_item
+        values (null, #{cartItem.book.id}, #{cartItem.buyCount}, #{cartItem.userBean.id})
+    </insert>
+
+    <update id="updateCartItem">
+        update t_cart_item
+        set buyCount = #{cartItem.buyCount}
+        where id = #{cartItem.id}
+    </update>
+
+    <delete id="delCartItem">
+        delete
+        from t_cart_item
+        where id = #{cartItem.id}
+    </delete>
+
+
+    <resultMap id="classMap" type="com.hfut.glxy.springcloud.entities.CartItem">
+        <id property="id" column="id"/>
+        <result property="buyCount" column="buyCount"/>
+        <association property="book" column="book"
+                     select="com.hfut.glxy.springcloud.mapper.BookMapper.getBook"
+                     javaType="com.hfut.glxy.springcloud.entities.Book"/>
+        <association property="userBean" column="userBean"
+                     select="com.hfut.glxy.springcloud.mapper.UserMapper.getUserById"
+                     javaType="com.hfut.glxy.springcloud.entities.User"/>
+    </resultMap>
+    <select id="getCartItemList" resultMap="classMap">
+        select *
+        from t_cart_item
+        where userBean = #{user.id}
+    </select>
+
+</mapper>
