@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hfut.glxy.springcloud.mapper.BookMapper">
+
+    <select id="getBookList" resultType="com.hfut.glxy.springcloud.entities.Book">
+        select *
+        from t_book
+        where bookStatus = 0
+    </select>
+
+
+    <select id="getBook" resultType="com.hfut.glxy.springcloud.entities.Book">
+        select *
+        from t_book
+        where id = #{id}
+    </select>
+
+    <update id="updateBook">
+        update t_book
+        set bookName   = #{book.bookName},
+            price      = #{book.price},
+            author     = #{book.author},
+            saleCount  = #{book.saleCount},
+            bookCount  = #{book.bookCount},
+            bookStatus = 0
+        where id = #{book.id}
+    </update>
+
+    <update id="deleteBook">
+        update t_book
+        set bookStatus = 1
+        where id = #{id}
+    </update>
+
+    <insert id="addBook">
+        insert into t_book
+        values (null, "null", #{book.bookName}, #{book.price},
+                #{book.author}, #{book.saleCount}, #{book.bookCount}, 0);
+    </insert>
+
+    <select id="getBookByName" resultType="com.hfut.glxy.springcloud.entities.Book">
+        select *
+        from t_book
+        where bookName = #{bookName}
+    </select>
+
+</mapper>
